@@ -1,46 +1,48 @@
-def cycle_sort(arr):
+def cycle_reorder(lst):
     """
-    cycle_sort
-    This is based on the idea that the permutations to be sorted
-    can be decomposed into cycles, and the results can be individually sorted by cycling.
+    cycle_reorder
 
-    Reference: https://en.wikipedia.org/wiki/Cycle_sort
+    This method organizes a list by recognizing value cycles 
+    and placing elements in their correct positions by cycling through them.
 
-    Average time complexity : O(N^2)
-    Worst case time complexity : O(N^2)
-    Best case time complexity : O(N^2)
-    Space Complexity: O(1) 
+    Concept: The list can be broken into independent cycles, 
+    each of which is sorted individually by rotating elements.
+
+
+    Average-Time Complexity: O(N^2)
+    Worst-Case Time Complexity: O(N^2)
+    Best-Case Time Complexity: O(N^2)
+    Space Complexity: O(1) (Sorts in-place)
     """
-    n = len(arr)
+    size = len(lst)
 
-    # Finding cycles to rotate
-    for cycle_start in range(n - 1):
-        item = arr[cycle_start]
+    for start in range(size - 1):
+        val = lst[start]
+        target_idx = start
 
-        # Find the correct position for item
-        pos =cycle_start
-        for i in range(cycle_start + 1, n):
-            if arr[i] < item:
-                pos += 1
+        # Determine the correct position for val
+        for i in range(start + 1, size):
+            if lst[i] < val:
+                target_idx += 1
 
-        # If the item is already in the correct position, then continue
-        if pos == cycle_start:
+        # If already positioned correctly, move to the next one 
+        if target_idx == start:
             continue
 
-        # Skip duplicate elements
-        while item == arr[pos]:
-            pos += 1
-        arr[pos], item = item, arr[pos]
+        # Skip duplicate values
+        while val == lst[target_idx]:
+            target_idx += 1
+        lst[target_idx], val = val, lst[target_idx]
 
-        # Rotate cycle
-        while pos != cycle_start:
-            pos = cycle_start
-            for i in range(cycle_start+ 1, n):
-                if arr[i] <item:
-                    pos += 1
+        # Continue rotating elements until the cycle is complete
+        while target_idx != start:
+            target_idx = start
+            for i in range(start + 1, size):
+                if lst[i] < val:
+                    target_idx += 1
 
-            while item == arr[pos]:
-                pos += 1
-            arr[pos], item = item, arr[pos]
-
-    return arr
+            while val == lst[target_idx]:
+                target_idx += 1
+            lst[target_idx], val = val, lst[target_idx]
+        # End of cycle
+    return lst
