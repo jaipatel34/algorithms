@@ -8,7 +8,8 @@ def cycle_sort(arr):
 
     Average time complexity : O(N^2)
     Worst case time complexity : O(N^2)
-    Space Complexity: O(1) (In-place sorting)
+    Best case time complexity : O(N^2)
+    Space Complexity: O(1) 
     """
     n = len(arr)
 
@@ -22,7 +23,7 @@ def cycle_sort(arr):
             if arr[i] < item:
                 pos += 1
 
-        # If the item is already in the correct position, continue
+        # If the item is already in the correct position, then continue
         if pos == cycle_start:
             continue
 
@@ -31,7 +32,7 @@ def cycle_sort(arr):
             pos += 1
         arr[pos], item = item, arr[pos]
 
-        # Rotate the cycle
+        # Rotate cycle
         while pos != cycle_start:
             pos = cycle_start
             for i in range(cycle_start+ 1, n):
